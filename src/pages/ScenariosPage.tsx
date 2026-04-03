@@ -25,7 +25,7 @@ export default function ScenariosPage() {
   return (
     <div className="relative z-[1] h-screen flex flex-col overflow-hidden">
       {/* Sticky nav — offset below ticker */}
-      <div className="mt-12 md:mt-0 py-3.5 px-[22px] shrink-0 z-10 backdrop-blur-[10px] bg-orv-bg/[0.78] border-b border-gold/[0.08] flex justify-between items-center">
+      <div className="py-3.5 px-[22px] shrink-0 z-10 backdrop-blur-[10px] bg-orv-bg/[0.78] border-b border-gold/[0.08] flex justify-between items-center">
         <button
           onClick={() => navigate("/")}
           className="font-mono text-[0.7rem] text-gold bg-transparent border-none cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
