@@ -37,7 +37,7 @@ export default function ScenarioSidebar({ selected, onSelect }: ScenarioSidebarP
         placeholder="Search scenarios..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full mb-3 py-2 px-3 rounded-md bg-orv-panel/80 border border-gold/15 font-mono text-[0.6rem] text-white/70 placeholder:text-white/25 outline-none focus:border-gold/35 transition-colors"
+        className="w-full mb-3 py-2.5 px-3.5 rounded-md bg-gold/[0.06] border border-gold/30 font-mono text-[0.72rem] text-white/80 placeholder:text-white/30 outline-none focus:border-gold/50 focus:bg-gold/[0.1] transition-all shadow-[0_0_12px_rgba(212,168,67,0.06)]"
       />
 
       {/* Type filter */}

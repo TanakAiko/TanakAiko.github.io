@@ -3,16 +3,24 @@ import { CONSTELLATIONS } from "@/data/constellations";
 import type { ConstellationData } from "@/lib/types";
 
 // Star map constants
-const BG_STAR_COUNT = 300;
-const PARTICLE_COUNT = 140;
 const PARALLAX_FACTOR = 0.35;
 const PARTICLE_LINK_DISTANCE = 100;
 const MOUSE_LINK_DISTANCE = 180;
 const MOUSE_GLOW_RADIUS = 80;
-const CONSTELLATION_COLS = 3;
 const TOTAL_SKY_MULTIPLIER = 5;
-const SHOOTING_STAR_CHANCE = 0.003; // chance per frame to spawn a shooting star
+const SHOOTING_STAR_CHANCE = 0.003;
 const MAX_SHOOTING_STARS = 3;
+
+// Responsive constants based on screen width
+function getResponsiveConfig(w: number) {
+  const isMobile = w < 768;
+  return {
+    bgStarCount: isMobile ? 150 : 300,
+    particleCount: isMobile ? 60 : 140,
+    constellationCols: isMobile ? 1 : w < 1024 ? 2 : 3,
+    constellationScale: isMobile ? 0.7 : 1,
+  };
+}
 
 interface BgStar {
   x: number;
@@ -59,7 +67,8 @@ export default function StarMap() {
   const cvs = useRef<HTMLCanvasElement>(null);
   const anim = useRef<number>(0);
   const mouse = useRef({ x: -999, y: -999 });
-  const scroll = useRef(0);
+  const scrollTarget = useRef(0);
+  const scrollSmooth = useRef(0);
   const placed = useRef<PlacedConstellation[]>([]);
   const dots = useRef<Particle[]>([]);
   const shootingStars = useRef<ShootingStar[]>([]);
@@ -70,34 +79,40 @@ export default function StarMap() {
     const ctx = el.getContext("2d")!;
     let W = (el.width = window.innerWidth || 800);
     let H = (el.height = window.innerHeight || 600);
+    let config = getResponsiveConfig(W);
 
-    const bgStars: BgStar[] = Array.from({ length: BG_STAR_COUNT }, () => {
-      const moving = Math.random() < 0.25; // 25% of stars drift slowly
-      return {
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: Math.random() * 1.4 + 0.2,
-        b: Math.random(),
-        ph: Math.random() * Math.PI * 2,
-        spd: 0.5 + Math.random() * 2.5,
-        vx: moving ? (Math.random() - 0.5) * 0.08 : 0,
-        vy: moving ? (Math.random() - 0.5) * 0.08 : 0,
-      };
-    });
+    const makeBgStars = (count: number) =>
+      Array.from({ length: count }, () => {
+        const moving = Math.random() < 0.25;
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.4 + 0.2,
+          b: Math.random(),
+          ph: Math.random() * Math.PI * 2,
+          spd: 0.5 + Math.random() * 2.5,
+          vx: moving ? (Math.random() - 0.5) * 0.08 : 0,
+          vy: moving ? (Math.random() - 0.5) * 0.08 : 0,
+        };
+      });
+
+    let bgStars: BgStar[] = makeBgStars(config.bgStarCount);
 
     const layout = () => {
+      const cols = config.constellationCols;
+      const scale = config.constellationScale;
       const total = H * TOTAL_SKY_MULTIPLIER;
-      const rows = Math.ceil(CONSTELLATIONS.length / CONSTELLATION_COLS);
-      const cW = (W - 100) / CONSTELLATION_COLS;
+      const rows = Math.ceil(CONSTELLATIONS.length / cols);
+      const cW = (W - (W < 768 ? 40 : 100)) / cols;
       const cH = total / rows;
       placed.current = CONSTELLATIONS.map((c, i) => {
-        const col = i % CONSTELLATION_COLS;
-        const row = Math.floor(i / CONSTELLATION_COLS);
+        const col = i % cols;
+        const row = Math.floor(i / cols);
         return {
           ...c,
-          cx: 50 + col * cW + cW * (0.15 + Math.random() * 0.6),
+          cx: (W < 768 ? 20 : 50) + col * cW + cW * (0.15 + Math.random() * 0.6),
           cy: row * cH + cH * (0.15 + Math.random() * 0.6),
-          sz: Math.min(cW, cH) * (0.35 + Math.random() * 0.25),
+          sz: Math.min(cW, cH) * (0.35 + Math.random() * 0.25) * scale,
           rot: (Math.random() - 0.5) * 0.4,
           ph: Math.random() * Math.PI * 2,
         };
@@ -105,15 +120,18 @@ export default function StarMap() {
     };
     layout();
 
-    dots.current = Array.from({ length: PARTICLE_COUNT }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.8 + 0.5,
-      b: Math.random(),
-      ph: Math.random() * Math.PI * 2,
-    }));
+    const makeParticles = (count: number) =>
+      Array.from({ length: count }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 1.8 + 0.5,
+        b: Math.random(),
+        ph: Math.random() * Math.PI * 2,
+      }));
+
+    dots.current = makeParticles(config.particleCount);
 
     const spawnShootingStar = () => {
       const angle = Math.PI * 0.15 + Math.random() * Math.PI * 0.25; // roughly diagonal
@@ -144,7 +162,9 @@ export default function StarMap() {
     const frame = () => {
       ctx.clearRect(0, 0, W, H);
       const t = performance.now() * 0.001;
-      const sc = scroll.current;
+      // Smooth scroll interpolation — prevents janky updates on mobile
+      scrollSmooth.current += (scrollTarget.current - scrollSmooth.current) * 0.15;
+      const sc = scrollSmooth.current;
 
       // Layer 1: Background stars (brighter + some moving)
       for (const s of bgStars) {
@@ -362,13 +382,16 @@ export default function StarMap() {
     const onResize = () => {
       W = el.width = window.innerWidth || 800;
       H = el.height = window.innerHeight || 600;
+      config = getResponsiveConfig(W);
+      bgStars = makeBgStars(config.bgStarCount);
+      dots.current = makeParticles(config.particleCount);
       layout();
     };
     const onMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
     };
     const onScroll = () => {
-      scroll.current = window.scrollY || 0;
+      scrollTarget.current = window.scrollY || 0;
     };
     window.addEventListener("resize", onResize);
     window.addEventListener("mousemove", onMove);
