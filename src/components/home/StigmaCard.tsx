@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import type { Stigma } from "@/lib/types";
-import { TIER_COLOR } from "@/lib/constants";
 import TierBadge from "@/components/ui/TierBadge";
 
 interface StigmaCardProps {
