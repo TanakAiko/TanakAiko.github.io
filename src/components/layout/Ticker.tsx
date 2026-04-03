@@ -20,7 +20,7 @@ export default function Ticker() {
 
   return (
     <div
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] font-mono text-[0.7rem] text-gold-bright bg-[rgba(10,10,20,0.88)] border border-gold/25 py-[7px] px-[18px] rounded backdrop-blur-sm whitespace-nowrap max-w-[92vw] overflow-hidden text-ellipsis transition-opacity duration-400"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] font-mono text-[0.65rem] md:text-[0.7rem] text-gold-bright bg-[rgba(10,10,20,0.88)] border border-gold/25 py-[7px] px-[14px] md:px-[18px] rounded backdrop-blur-sm max-w-[88vw] md:max-w-[92vw] text-center leading-relaxed transition-opacity duration-400"
       style={{ opacity: vis ? 1 : 0 }}
     >
       [Constellation &apos;{WATCHERS[wi]}&apos; {WATCHER_MSGS[mi]}]

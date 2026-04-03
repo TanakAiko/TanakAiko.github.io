@@ -43,7 +43,7 @@ export default function ProfileModal({ open, onClose }: ProfileModalProps) {
   return (
     <div
       onClick={close}
-      className="fixed inset-0 z-[2000] flex justify-center items-center p-5 overflow-y-auto transition-all duration-400"
+      className="fixed inset-0 z-[2000] flex justify-center items-start md:items-center p-3 md:p-5 overflow-y-auto transition-all duration-400"
       style={{
         background: show ? "rgba(0,0,0,0.72)" : "rgba(0,0,0,0)",
         backdropFilter: show ? "blur(6px)" : "blur(0px)",
@@ -51,7 +51,7 @@ export default function ProfileModal({ open, onClose }: ProfileModalProps) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-[1100px] rounded-[10px] backdrop-blur-[20px]"
+        className="w-full max-w-[1100px] my-auto rounded-[10px] backdrop-blur-[20px] max-h-[90vh] md:max-h-none overflow-y-auto"
         style={{
           border: "1px solid rgba(212,168,67,0.35)",
           background: "linear-gradient(170deg,rgba(15,18,42,0.97),rgba(8,10,25,0.98))",

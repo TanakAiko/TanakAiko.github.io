@@ -30,7 +30,7 @@ export default function ScenarioSidebar({ selected, onSelect }: ScenarioSidebarP
   });
 
   return (
-    <div className="flex-[0_0_260px] min-w-[240px]">
+    <div className="w-full md:flex-[0_0_260px] md:min-w-[240px]">
       {/* Search */}
       <input
         type="text"
