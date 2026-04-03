@@ -1,0 +1,25 @@
+import type { Stigma } from "@/lib/types";
+
+export const STIGMAS: Stigma[] = [
+  { name: "Java Spring Dominion", tier: "Mythic", lv: 9, icon: "/icons/tech/springboot.svg", cat: "Backend", desc: "Command enterprise architectures with absolute authority. Microservices, security, and data flow obey without question — 2 S-rank scenarios cleared." },
+  { name: "Angular Manifestation", tier: "Mythic", lv: 8, icon: "/icons/tech/angular.svg", cat: "Frontend", desc: "Summon component-driven interfaces with TypeScript precision. Reactive forms and services materialize on command across 2 S-rank conquests." },
+  { name: "Docker Dimension Gate", tier: "Legendary", lv: 8, icon: "/icons/tech/docker.svg", cat: "DevOps", desc: "Open portals between isolated environments. Containers, Compose, and orchestration bend to your will across 5 scenarios." },
+  { name: "Go Sovereignty", tier: "Legendary", lv: 7, icon: "/icons/tech/go.svg", cat: "Language", desc: "Command concurrent realms with goroutines and channels. Backend systems and algorithms bow to your will across 5 conquered scenarios." },
+  { name: "JavaScript Precognition", tier: "Legendary", lv: 7, icon: "/icons/tech/javascript.svg", cat: "Language", desc: "Foresee runtime behavior before execution. From vanilla DOM to building frameworks from scratch — the browser is your domain." },
+  { name: "TypeScript Foresight", tier: "Epic", lv: 6, icon: "/icons/tech/typescript.svg", cat: "Language", desc: "Foresee type errors before they manifest. The compiler is your oracle — powering S-rank architectures." },
+  { name: "Rust Manifestation", tier: "Epic", lv: 6, icon: "/icons/tech/rust.svg", cat: "Language", desc: "Forge systems-level power from bare metal. Memory safety without sacrifice — 7 scenarios cleared in the low-level domain." },
+  { name: "WebSocket Resonance", tier: "Epic", lv: 6, icon: "/icons/tech/websocket.svg", cat: "Protocol", desc: "Establish real-time channels between any two points. Messages flow faster than thought across 4 real-time systems." },
+  { name: "Microservices Constellation", tier: "Epic", lv: 6, icon: "/icons/tech/microservices.svg", cat: "Architecture", desc: "Orchestrate distributed systems as a network of autonomous services. API gateways, service meshes, and event-driven communication — forged across S-rank and A-rank conquests." },
+  { name: "CI/CD War Machine", tier: "Epic", lv: 5, icon: "/icons/tech/jenkins.svg", cat: "DevOps", desc: "Forge unbreakable deployment pipelines. Jenkins, SonarQube, and Nexus obey in concert — forged in an S-rank scenario." },
+  { name: "Neo4j Graph Sight", tier: "Rare", lv: 5, icon: "/icons/tech/neo4j.svg", cat: "Database", desc: "See the hidden connections between all things. Graph queries reveal relationships invisible to relational minds." },
+  { name: "React Incarnation", tier: "Rare", lv: 5, icon: "/icons/tech/react.svg", cat: "Frontend", desc: "Summon reactive interfaces with component-driven will. Hooks and state flow like second nature." },
+  { name: "Next.js Acceleration", tier: "Rare", lv: 5, icon: "/icons/tech/nextjs.svg", cat: "Framework", desc: "Bend server and client rendering to your will. SSR and SSG obey without question." },
+  { name: "Node.js Sovereignty", tier: "Rare", lv: 4, icon: "/icons/tech/nodejs.svg", cat: "Backend", desc: "Command server-side realms with async authority. Express routes materialize on demand." },
+  { name: "Tokio Async Arts", tier: "Rare", lv: 5, icon: "/icons/tech/tokio.svg", cat: "Runtime", desc: "Channel asynchronous power through the Tokio runtime. Concurrent tasks execute with zero-cost precision." },
+  { name: "Game Engine Forge", tier: "Rare", lv: 5, icon: "/icons/tech/bevy.svg", cat: "Engine", desc: "Wield Bevy and SDL2 to render worlds from nothing. ECS architecture and real-time physics obey your design." },
+  { name: "SQLite Archive", tier: "Rare", lv: 4, icon: "/icons/tech/sqlite.svg", cat: "Database", desc: "Store and retrieve knowledge from the embedded abyss. Lightweight persistence across 2 conquered scenarios." },
+  { name: "C Ancient Arts", tier: "Rare", lv: 3, icon: "/icons/tech/c.svg", cat: "Language", desc: "Channel the oldest language of the machine. Pointers and memory bend to disciplined will." },
+  { name: "MongoDB Abyss", tier: "Rare", lv: 5, icon: "/icons/tech/mongodb.svg", cat: "Database", desc: "Store boundless data in the document abyss. Schemas dissolve — collections and queries obey in an S-rank scenario." },
+  { name: "Git Timeline Control", tier: "Rare", lv: 5, icon: "/icons/tech/git.svg", cat: "Tools", desc: "Manipulate the flow of code history. Rebase, merge, and cherry-pick across timelines — no scenario escapes version control." },
+  { name: "Express Routing Arts", tier: "Rare", lv: 4, icon: "/icons/tech/express.svg", cat: "Backend", desc: "Channel HTTP requests through middleware with precision. Routes and handlers materialize on demand." },
+];
